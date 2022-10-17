@@ -1,49 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     android:layout_marginBottom="5dp"
-    android:background="@drawable/item_character_bg">
+    android:background="@drawable/item_comics_bg"
+    android:elevation="10dp"
+    android:focusable="true"
+    android:layoutDirection="ltr">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/comicThumbnailCv"
+        android:layout_width="150dp"
+        android:layout_height="225dp"
+        android:padding="10dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/comicThumbnailIV"
+            android:layout_width="150dp"
+            android:layout_height="225dp"
+            android:src="@color/cardview_dark_background" />
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/comicNameTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/crimson_text_semibold"
-        android:padding="5dp"
+        android:fontFamily="@font/crimson_text_regular"
+        android:padding="10dp"
         android:textColor="@color/white"
         android:textSize="22sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/comicThumbnailIV"
+        app:layout_constraintStart_toEndOf="@+id/comicThumbnailCv"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Iron Man" />
-
-    <ImageView
-
-        android:id="@+id/comicThumbnailIV"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
-        android:background="@drawable/item_character_bg"
-        android:padding="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@color/cardview_dark_background" />
+        tools:text="Title" />
 
     <TextView
         android:id="@+id/comicDescriptionTv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="@font/crimson_text_regular"
-        android:padding="5dp"
-        android:textColor="#9A6E9A"
-        android:textSize="18sp"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/comicThumbnailIV"
-        app:layout_constraintTop_toBottomOf="@+id/comicNameTv"
+        app:layout_constraintEnd_toEndOf="@+id/comicNameTv"
+        app:layout_constraintStart_toStartOf="@+id/comicNameTv"
+        app:layout_constraintTop_toBottomOf="@id/comicNameTv"
         tools:text="Description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

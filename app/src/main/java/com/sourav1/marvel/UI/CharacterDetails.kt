@@ -48,7 +48,10 @@ class CharacterDetails(val collectionURI: String, val mId: Int) :
     private fun setupRecyclerView() {
         mAdapter = CharacterDetailsAdapter()
         rv.apply {
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager =
+                LinearLayoutManager(
+                    requireActivity().applicationContext
+                )
             adapter = mAdapter
         }
     }

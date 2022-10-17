@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="5dp"
     android:layout_marginBottom="5dp"
     android:background="@drawable/item_character_bg"
     android:elevation="10dp">
@@ -17,33 +18,40 @@
         android:textColor="@color/white"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/thumbnailIV"
+        app:layout_constraintStart_toEndOf="@+id/thumbnailCv"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Iron Man" />
 
-    <ImageView
-
-        android:id="@+id/thumbnailIV"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/thumbnailCv"
         android:layout_width="100dp"
         android:layout_height="150dp"
-        android:background="@drawable/item_character_bg"
-        android:padding="10dp"
+        android:padding="3dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@color/cardview_dark_background" />
+        tools:src="@color/cardview_dark_background">
+
+
+        <ImageView
+            android:id="@+id/thumbnailIV"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:src="@color/cardview_dark_background" />
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/descriptionTv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="@font/crimson_text_regular"
-        android:maxLines="2"
-        android:padding="10dp"
+        android:paddingHorizontal="10dp"
         android:textColor="#9A6E9A"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/thumbnailIV"
+        app:layout_constraintStart_toEndOf="@+id/thumbnailCv"
         app:layout_constraintTop_toBottomOf="@+id/characterNameTv"
         tools:text="Description" />
 

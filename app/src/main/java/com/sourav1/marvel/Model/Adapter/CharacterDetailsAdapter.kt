@@ -50,7 +50,7 @@ class CharacterDetailsAdapter :
             val options =
                 RequestOptions().placeholder(R.drawable.app_logo).error(R.drawable.app_logo)
             val imageUrl_ =
-                "${currRes.thumbnailUrl}/portrait_medium.${currRes.thumbnailExtension}"
+                "${currRes.thumbnailUrl}/portrait_xlarge.${currRes.thumbnailExtension}"
             val imageUrl = Constants.convertHttpToHttps(imageUrl_)
             Glide.with(holder.itemView.context).load(imageUrl).apply(options).into(comicThumbnailTv)
         }
