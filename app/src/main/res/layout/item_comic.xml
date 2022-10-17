@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="2dp"
+    android:layout_marginBottom="5dp"
     android:background="@drawable/item_character_bg">
 
     <TextView
         android:id="@+id/comicNameTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/crimson_text_semibold"
         android:padding="5dp"
         android:textColor="@color/white"
         android:textSize="22sp"
@@ -36,6 +36,7 @@
         android:id="@+id/comicDescriptionTv"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fontFamily="@font/crimson_text_regular"
         android:padding="5dp"
         android:textColor="#9A6E9A"
         android:textSize="18sp"

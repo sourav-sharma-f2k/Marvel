@@ -1,6 +1,5 @@
 package com.sourav1.marvel.Model.Adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,33 +11,33 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.sourav1.marvel.Model.Data.CharacterData.Result
+import com.sourav1.marvel.Database.Entities.CharacterResult
 import com.sourav1.marvel.R
 import com.sourav1.marvel.UI.CharacterDetails
-import com.sourav1.marvel.UI.LoadCharacters
 import com.sourav1.marvel.Util.Constants.Companion.convertHttpToHttps
 
 class LoadCharactersAdapter(private val fragmentManager: FragmentManager) :
     RecyclerView.Adapter<LoadCharactersAdapter.LoadCharacterViewHolder>() {
 
-    inner class LoadCharacterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class LoadCharacterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         val characterNameTv: TextView = itemView.findViewById(R.id.characterNameTv)
         val descriptionTv: TextView = itemView.findViewById(R.id.descriptionTv)
         val thumbnailIv: ImageView = itemView.findViewById(R.id.thumbnailIV)
 
         override fun onClick(view: View?) {
-            if(view != null){
+            if (view != null) {
                 itemView.setOnClickListener(this)
             }
         }
     }
 
-    private val diffCallBacks = object : DiffUtil.ItemCallback<Result>() {
-        override fun areContentsTheSame(oldItem: Result, newItem: Result): Boolean {
+    private val diffCallBacks = object : DiffUtil.ItemCallback<CharacterResult>() {
+        override fun areContentsTheSame(oldItem: CharacterResult, newItem: CharacterResult): Boolean {
             return oldItem == newItem
         }
 
-        override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
+        override fun areItemsTheSame(oldItem: CharacterResult, newItem: CharacterResult): Boolean {
             return oldItem.id == newItem.id
         }
     }
@@ -57,20 +56,21 @@ class LoadCharactersAdapter(private val fragmentManager: FragmentManager) :
         val options = RequestOptions().placeholder(R.drawable.app_logo).error(R.drawable.app_logo)
         holder.apply {
             characterNameTv.text = currRes.name
-            descriptionTv.text = if (currRes.description.isNotEmpty()) {
+            descriptionTv.text = if(currRes.description == null || currRes.description == ""){
+                "Description not provided by author..."
+            }
+            else{
                 currRes.description
-            } else {
-                "No description provided 🥲"
             }
 
             val imageUrl_ =
-                "${currRes.thumbnail.path}/portrait_medium.${currRes.thumbnail.extension}"
+                "${currRes.thumbnailUrl}/portrait_medium.${currRes.thumbnailExtension}"
             val imageUrl = convertHttpToHttps(imageUrl_)
             Glide.with(holder.itemView.context).load(imageUrl).apply(options).into(thumbnailIv)
         }
         holder.itemView.setOnClickListener {
             fragmentManager.beginTransaction().apply {
-                replace(R.id.fragmentContainer, CharacterDetails(currRes.comics.collectionURI))
+                replace(R.id.fragmentContainer, CharacterDetails(currRes.comicsListURI, currRes.id))
                 addToBackStack(null)
                 commit()
             }

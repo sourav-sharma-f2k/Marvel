@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-class LoadCharacterDetailsFactory(val collectionURI: String, val context: Context, val id: Int) : ViewModelProvider.Factory {
+class LoadCharacterFactory(val context: Context): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return LoadCharacterDetailsViewModel(collectionURI, context, id) as T
+        return LoadCharacterViewModel(context) as T
     }
 }

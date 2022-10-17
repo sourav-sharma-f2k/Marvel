@@ -1,5 +1,10 @@
 package com.sourav1.marvel.Util
 
+import com.sourav1.marvel.Database.Entities.CharacterResult
+import com.sourav1.marvel.Database.Entities.ComicsResult
+import com.sourav1.marvel.Model.Data.CharacterData.Characters
+import com.sourav1.marvel.Model.Data.ComicsData.Comics
+import retrofit2.Response
 import java.math.BigInteger
 import java.security.MessageDigest
 
@@ -25,15 +30,79 @@ class Constants {
                 temp += url[idx]
                 idx++
             }
-
             temp += 's'
-
             while (idx < size) {
                 temp += url[idx]
                 idx++
             }
-
             return temp
+        }
+
+        fun parseCharacterResponseToCharacterResult(response: Response<Characters>): List<CharacterResult> {
+            val mResponse: MutableList<CharacterResult> = mutableListOf()
+
+            response.body()!!.data.results.forEach {
+                mResponse.add(
+                    CharacterResult(
+                        id = it.id,
+                        name = it.name,
+                        description = if (it.description == null) {
+                            "Description not provided by author.."
+                        } else {
+                            it.description
+                        },
+                        thumbnailUrl = it.thumbnail.path,
+                        thumbnailExtension = it.thumbnail.extension,
+                        comicsListURI = it.comics.collectionURI
+                    )
+                )
+            }
+
+            return mResponse.toList()
+        }
+
+        fun parseComicResponseToComicsResult(response: Response<Comics>, parentId: Int): List<ComicsResult> {
+            val mResponse: MutableList<ComicsResult> = mutableListOf()
+
+            response.body()!!.data.results.forEach {
+                mResponse.add(
+                    ComicsResult(
+                        id = it.id,
+                        parentId = parentId,
+                        title = it.title,
+                        description = if (it.description == null) {
+                            "Description not provided by author.."
+                        } else {
+                            it.description
+                        },
+                        thumbnailExtension = it.thumbnail.extension,
+                        thumbnailUrl = it.thumbnail.path,
+                        printPrice = if (it.prices.size >= 1) {
+                            it.prices[0].price
+                        } else {
+                            0.00
+                        },
+                        digitalPurchasePrice = if (it.prices.size >= 2) {
+                            it.prices[1].price
+                        } else {
+                            0.00
+                        },
+                        pageCount = it.pageCount,
+                        detailsUrl = if (it.urls.size >= 1) {
+                            it.urls[0].url
+                        } else {
+                            null
+                        },
+                        purchaseUrl = if (it.urls.size >= 2) {
+                            it.urls[1].url
+                        } else {
+                            null
+                        }
+                    )
+                )
+            }
+
+            return mResponse.toList()
         }
     }
 }

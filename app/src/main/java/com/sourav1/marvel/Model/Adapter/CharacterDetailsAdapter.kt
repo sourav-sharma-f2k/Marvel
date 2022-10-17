@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.sourav1.marvel.Model.Data.ComicsData.Result
+import com.sourav1.marvel.Database.Entities.ComicsResult
 import com.sourav1.marvel.R
 import com.sourav1.marvel.Util.Constants
 
@@ -23,12 +23,12 @@ class CharacterDetailsAdapter :
         val comicThumbnailTv: ImageView = itemView.findViewById(R.id.comicThumbnailIV)
     }
 
-    private val diffCallbacks = object : DiffUtil.ItemCallback<Result>() {
-        override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
+    private val diffCallbacks = object : DiffUtil.ItemCallback<ComicsResult>() {
+        override fun areItemsTheSame(oldItem: ComicsResult, newItem: ComicsResult): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Result, newItem: Result): Boolean {
+        override fun areContentsTheSame(oldItem: ComicsResult, newItem: ComicsResult): Boolean {
             return oldItem == newItem
         }
     }
@@ -45,22 +45,18 @@ class CharacterDetailsAdapter :
         val currRes = differ.currentList[position]
         holder.apply {
             comicTitleTv.text = currRes.title
-            comicDescTv.text = if(currRes.description == null || currRes.description.isEmpty()){
-                "Description is not provided by author."
-            }else{
-                currRes.description
-            }
+            comicDescTv.text = currRes.description
 
             val options =
                 RequestOptions().placeholder(R.drawable.app_logo).error(R.drawable.app_logo)
             val imageUrl_ =
-                "${currRes.thumbnail.path}/portrait_medium.${currRes.thumbnail.extension}"
+                "${currRes.thumbnailUrl}/portrait_medium.${currRes.thumbnailExtension}"
             val imageUrl = Constants.convertHttpToHttps(imageUrl_)
             Glide.with(holder.itemView.context).load(imageUrl).apply(options).into(comicThumbnailTv)
         }
     }
 
-    override fun getItemCount(): Int{
+    override fun getItemCount(): Int {
         return differ.currentList.size
     }
 }
