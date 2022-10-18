@@ -1,10 +1,13 @@
 package com.sourav1.marvel.Model.Adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,9 +15,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.sourav1.marvel.Database.Entities.ComicsResult
 import com.sourav1.marvel.R
+import com.sourav1.marvel.UI.ComicDetails
 import com.sourav1.marvel.Util.Constants
 
-class CharacterDetailsAdapter :
+class CharacterDetailsAdapter(private val fragmentManager: FragmentManager) :
     RecyclerView.Adapter<CharacterDetailsAdapter.CharacterDetailsViewHolder>() {
 
     inner class CharacterDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -48,11 +52,23 @@ class CharacterDetailsAdapter :
             comicDescTv.text = currRes.description
 
             val options =
-                RequestOptions().placeholder(R.drawable.app_logo).error(R.drawable.app_logo)
+                RequestOptions().placeholder(R.drawable.app_logo).error(R.drawable.app_logo).centerCrop()
             val imageUrl_ =
-                "${currRes.thumbnailUrl}/portrait_xlarge.${currRes.thumbnailExtension}"
+                "${currRes.thumbnailUrl}/portrait_fantastic.${currRes.thumbnailExtension}"
             val imageUrl = Constants.convertHttpToHttps(imageUrl_)
             Glide.with(holder.itemView.context).load(imageUrl).apply(options).into(comicThumbnailTv)
+        }
+
+        holder.itemView.setOnClickListener {
+            val args = Bundle()
+            args.putSerializable("COMICS_RESULT", currRes)
+            val fragment = ComicDetails()
+            fragment.arguments = args
+            fragmentManager.beginTransaction().apply {
+                replace(R.id.fragmentContainer, fragment)
+                addToBackStack(null)
+                commit()
+            }
         }
     }
 

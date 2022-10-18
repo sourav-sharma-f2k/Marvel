@@ -14,7 +14,7 @@ import com.sourav1.marvel.UI.ViewModel.LoadCharacterDetailsFactory
 import com.sourav1.marvel.UI.ViewModel.LoadCharacterDetailsViewModel
 import com.sourav1.marvel.Util.Constants.Companion.convertHttpToHttps
 
-class CharacterDetails(val collectionURI: String, val mId: Int) :
+class CharacterDetails() :
     Fragment(R.layout.fragment_character_details) {
     lateinit var viewModel: LoadCharacterDetailsViewModel
     lateinit var rv: RecyclerView
@@ -23,8 +23,11 @@ class CharacterDetails(val collectionURI: String, val mId: Int) :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val collectionURI = requireArguments().getString("URI")
+        val mId = requireArguments().getInt("PARENT_ID")
+
         rv = view.findViewById(R.id.comicsRv)
-        val mUrl = convertHttpToHttps(collectionURI)
+        val mUrl = convertHttpToHttps(collectionURI!!)
         progressBar = view.findViewById(R.id.progressBarDetails)
 
         viewModel = ViewModelProvider(
@@ -46,7 +49,7 @@ class CharacterDetails(val collectionURI: String, val mId: Int) :
     }
 
     private fun setupRecyclerView() {
-        mAdapter = CharacterDetailsAdapter()
+        mAdapter = CharacterDetailsAdapter(requireActivity().supportFragmentManager)
         rv.apply {
             layoutManager =
                 LinearLayoutManager(

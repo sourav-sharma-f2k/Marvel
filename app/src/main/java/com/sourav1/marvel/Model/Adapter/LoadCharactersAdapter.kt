@@ -1,5 +1,6 @@
 package com.sourav1.marvel.Model.Adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,7 +54,7 @@ class LoadCharactersAdapter(private val fragmentManager: FragmentManager) :
 
     override fun onBindViewHolder(holder: LoadCharacterViewHolder, position: Int) {
         val currRes = differ.currentList[position]
-        val options = RequestOptions().placeholder(R.drawable.app_logo).error(R.drawable.app_logo)
+        val options = RequestOptions().placeholder(R.drawable.app_logo).error(R.drawable.app_logo).centerCrop()
         holder.apply {
             characterNameTv.text = currRes.name
             descriptionTv.text = if(currRes.description == null || currRes.description == ""){
@@ -64,13 +65,18 @@ class LoadCharactersAdapter(private val fragmentManager: FragmentManager) :
             }
 
             val imageUrl_ =
-                "${currRes.thumbnailUrl}/portrait_medium.${currRes.thumbnailExtension}"
+                "${currRes.thumbnailUrl}/portrait_xlarge.${currRes.thumbnailExtension}"
             val imageUrl = convertHttpToHttps(imageUrl_)
             Glide.with(holder.itemView.context).load(imageUrl).apply(options).into(thumbnailIv)
         }
         holder.itemView.setOnClickListener {
+            val args = Bundle()
+            args.putString("URI", currRes.comicsListURI)
+            args.putInt("PARENT_ID", currRes.id)
+            val fragment = CharacterDetails()
+            fragment.arguments = args
             fragmentManager.beginTransaction().apply {
-                replace(R.id.fragmentContainer, CharacterDetails(currRes.comicsListURI, currRes.id))
+                replace(R.id.fragmentContainer, fragment)
                 addToBackStack(null)
                 commit()
             }

@@ -2,6 +2,7 @@ package com.sourav1.marvel.Database.Entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "comicsResult")
 data class ComicsResult(
@@ -16,4 +17,4 @@ data class ComicsResult(
     val pageCount: Int,
     val detailsUrl: String?,
     val purchaseUrl: String?
-)
+) : Serializable
