@@ -1,4 +1,4 @@
-package com.sourav1.marvel.UI.ViewModel
+package com.sourav1.marvel.ViewModel
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData

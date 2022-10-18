@@ -1,4 +1,4 @@
-package com.sourav1.marvel.Retrofit
+package com.sourav1.marvel.Api
 
 import com.sourav1.marvel.Model.Data.CharacterData.Characters
 import com.sourav1.marvel.Model.Data.ComicsData.Comics

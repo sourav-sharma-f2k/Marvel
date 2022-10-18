@@ -1,12 +1,11 @@
 package com.sourav1.marvel.Repository
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import com.sourav1.marvel.Database.DbInstance
 import com.sourav1.marvel.Database.Entities.CharacterResult
 import com.sourav1.marvel.Database.Entities.ComicsResult
-import com.sourav1.marvel.Retrofit.MarvelApi
-import com.sourav1.marvel.Retrofit.RetrofitInstance
+import com.sourav1.marvel.Api.MarvelApi
+import com.sourav1.marvel.Api.RetrofitInstance
 import com.sourav1.marvel.Util.Constants.Companion.API_KEY
 import com.sourav1.marvel.Util.Constants.Companion.HASH
 import com.sourav1.marvel.Util.Constants.Companion.parseCharacterResponseToCharacterResult
@@ -53,5 +52,9 @@ class Repository(private val context: Context) {
 
     suspend fun getComicsResult(id: Int): List<ComicsResult> {
         return dbInstance.dao().getComicsResult(id)
+    }
+
+    suspend fun getRecommendedCharactersList(): List<CharacterResult>{
+        return dbInstance.dao().getRecommendedCharactersList()
     }
 }

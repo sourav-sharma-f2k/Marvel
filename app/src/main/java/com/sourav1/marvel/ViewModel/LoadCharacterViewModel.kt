@@ -1,4 +1,4 @@
-package com.sourav1.marvel.UI.ViewModel
+package com.sourav1.marvel.ViewModel
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -17,6 +17,7 @@ import java.lang.Exception
 @OptIn(DelicateCoroutinesApi::class)
 class LoadCharacterViewModel(context: Context) : ViewModel() {
     val result: MutableLiveData<List<CharacterResult>> = MutableLiveData()
+    val resultRecommended: MutableLiveData<List<CharacterResult>> = MutableLiveData()
 
     private lateinit var repo: Repository
 
@@ -39,4 +40,9 @@ class LoadCharacterViewModel(context: Context) : ViewModel() {
         }
     }
 
+     fun refreshRecommendedCharacters() = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            resultRecommended.postValue(repo.getRecommendedCharactersList())
+        }
+    }
 }

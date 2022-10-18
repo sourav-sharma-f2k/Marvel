@@ -13,8 +13,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.sourav1.marvel.Database.Entities.ComicsResult
 import com.sourav1.marvel.R
-import com.sourav1.marvel.UI.ViewModel.ComicDetailViewModel
-import com.sourav1.marvel.UI.ViewModel.ComicDetailViewModelFactory
+import com.sourav1.marvel.ViewModel.ComicDetailViewModel
+import com.sourav1.marvel.ViewModel.Factory.ComicDetailViewModelFactory
 import com.sourav1.marvel.Util.Constants.Companion.convertHttpToHttps
 
 class ComicDetails() : Fragment(R.layout.fragment_comic_details) {
@@ -27,6 +27,7 @@ class ComicDetails() : Fragment(R.layout.fragment_comic_details) {
     lateinit var printPriceTv: TextView
     lateinit var digitalPurchasePriceTv: TextView
     lateinit var viewModel: ComicDetailViewModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

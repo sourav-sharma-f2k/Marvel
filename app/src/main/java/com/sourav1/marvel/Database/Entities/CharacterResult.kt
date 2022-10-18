@@ -10,5 +10,6 @@ data class CharacterResult(
     val description: String?,
     val thumbnailUrl: String,
     val thumbnailExtension: String,
-    val comicsListURI: String
+    val comicsListURI: String,
+    val clickCount: Int = 0
 )

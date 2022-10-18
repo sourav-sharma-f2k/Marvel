@@ -20,6 +20,7 @@ class ComicPurchaseScreen() : Fragment(R.layout.fragment_comic_purchse_screen) {
 
         val webView: WebView = view.findViewById(R.id.webView)
         val correctUrl = convertHttpToHttps(url!!)
+
         webView.apply {
             progressBar.visibility = View.VISIBLE
             webViewClient = WebViewClient()

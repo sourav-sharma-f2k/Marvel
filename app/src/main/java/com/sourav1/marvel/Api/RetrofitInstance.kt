@@ -1,4 +1,4 @@
-package com.sourav1.marvel.Retrofit
+package com.sourav1.marvel.Api
 
 import com.sourav1.marvel.Util.Constants.Companion.BASE_URL
 import retrofit2.Retrofit
