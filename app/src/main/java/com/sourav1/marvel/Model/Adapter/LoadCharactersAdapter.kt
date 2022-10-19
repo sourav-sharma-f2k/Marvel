@@ -23,9 +23,11 @@ import com.sourav1.marvel.Database.Entities.CharacterResult
 import com.sourav1.marvel.R
 import com.sourav1.marvel.UI.CharacterDetails
 import com.sourav1.marvel.Util.Constants.Companion.convertHttpToHttps
+import com.sourav1.marvel.di.AppModule.getDbInstance
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class LoadCharactersAdapter(private val activity: FragmentActivity) :
+class LoadCharactersAdapter(private val activity: FragmentActivity, val onClick: (id: Int) -> Unit) :
     RecyclerView.Adapter<LoadCharactersAdapter.LoadCharacterViewHolder>() {
 
     inner class LoadCharacterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
@@ -79,19 +81,15 @@ class LoadCharactersAdapter(private val activity: FragmentActivity) :
             Glide.with(holder.itemView.context).load(imageUrl).apply(options).into(thumbnailIv)
         }
         holder.itemView.setOnClickListener {
-            val args = Bundle()
+            onClick.invoke(currRes.id)
 
+            val args = Bundle()
             args.putString("URI", currRes.comicsListURI)
             args.putInt("PARENT_ID", currRes.id)
             args.putString("CHARACTER_NAME", currRes.name)
 
             val fragment = CharacterDetails()
             fragment.arguments = args
-
-            GlobalScope.launch(Dispatchers.IO) {
-                DbInstance.getInstance(activity.applicationContext).dao()
-                    .increaseClickCount(currRes.id)
-            }
 
             activity.supportFragmentManager.beginTransaction().apply {
                 replace(R.id.fragmentContainer, fragment)

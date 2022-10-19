@@ -1,11 +1,9 @@
 package com.sourav1.marvel.Repository
 
-import android.content.Context
+import com.sourav1.marvel.Api.MarvelApi
 import com.sourav1.marvel.Database.DbInstance
 import com.sourav1.marvel.Database.Entities.CharacterResult
 import com.sourav1.marvel.Database.Entities.ComicsResult
-import com.sourav1.marvel.Api.MarvelApi
-import com.sourav1.marvel.Api.RetrofitInstance
 import com.sourav1.marvel.Util.Constants.Companion.API_KEY
 import com.sourav1.marvel.Util.Constants.Companion.HASH
 import com.sourav1.marvel.Util.Constants.Companion.parseCharacterResponseToCharacterResult
@@ -14,10 +12,8 @@ import com.sourav1.marvel.Util.Constants.Companion.timeStamp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class Repository(private val context: Context) {
-    private val marvelApiInstance: MarvelApi =
-        RetrofitInstance.getInstance().create(MarvelApi::class.java)
-    private val dbInstance: DbInstance = DbInstance.getInstance(context)
+
+class Repository(private val marvelApiInstance: MarvelApi, private val dbInstance: DbInstance) {
 
     suspend fun refreshCharacters(apiKey: String, ts: String, hash: String) {
         withContext(Dispatchers.IO) {
@@ -33,7 +29,13 @@ class Repository(private val context: Context) {
         }
     }
 
-    suspend fun refreshComics(url: String, apiKey: String, ts: String, hash: String, parentId: Int) {
+    suspend fun refreshComics(
+        url: String,
+        apiKey: String,
+        ts: String,
+        hash: String,
+        parentId: Int
+    ) {
         withContext(Dispatchers.IO) {
             val response = marvelApiInstance.getComics(url, apiKey, ts, hash)
             val mResponse: List<ComicsResult>
@@ -54,7 +56,11 @@ class Repository(private val context: Context) {
         return dbInstance.dao().getComicsResult(id)
     }
 
-    suspend fun getRecommendedCharactersList(): List<CharacterResult>{
+    suspend fun getRecommendedCharactersList(): List<CharacterResult> {
         return dbInstance.dao().getRecommendedCharactersList()
+    }
+
+    suspend fun increaseClickCount(id: Int){
+        dbInstance.dao().increaseClickCount(id)
     }
 }

@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sourav1.marvel.Model.Adapter.LoadCharactersAdapter
 import com.sourav1.marvel.Model.Adapter.LoadRecommendedCharacterAdapter
 import com.sourav1.marvel.R
-import com.sourav1.marvel.ViewModel.Factory.LoadCharacterFactory
 import com.sourav1.marvel.ViewModel.LoadCharacterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoadCharacters : Fragment(R.layout.fragment_load_characters) {
     lateinit var viewModel: LoadCharacterViewModel
     private lateinit var mAdapter: LoadCharactersAdapter
@@ -34,11 +35,7 @@ class LoadCharacters : Fragment(R.layout.fragment_load_characters) {
         setupRecommendedCharacterRv()
         setupRecyclerView()
 
-        viewModel = ViewModelProvider(
-            this,
-            LoadCharacterFactory(requireContext())
-        )[LoadCharacterViewModel::class.java]
-
+        viewModel = ViewModelProvider(this)[LoadCharacterViewModel::class.java]
         viewModel.refreshRecommendedCharacters()
 
         viewModel.result.observe(viewLifecycleOwner) { result ->
@@ -84,7 +81,9 @@ class LoadCharacters : Fragment(R.layout.fragment_load_characters) {
     }
 
     private fun setupRecyclerView() {
-        mAdapter = LoadCharactersAdapter(requireActivity())
+        mAdapter = LoadCharactersAdapter(requireActivity()) {
+            viewModel.increaseClick(it)
+        }
         rv.apply {
             layoutManager = LinearLayoutManager(activity)
             scrollToPosition(0)

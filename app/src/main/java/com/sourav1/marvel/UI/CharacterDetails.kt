@@ -11,34 +11,42 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sourav1.marvel.Model.Adapter.CharacterDetailsAdapter
 import com.sourav1.marvel.R
-import com.sourav1.marvel.ViewModel.Factory.LoadCharacterDetailsFactory
-import com.sourav1.marvel.ViewModel.LoadCharacterDetailsViewModel
+import com.sourav1.marvel.Util.Constants.Companion.API_KEY
+import com.sourav1.marvel.Util.Constants.Companion.HASH
 import com.sourav1.marvel.Util.Constants.Companion.convertHttpToHttps
+import com.sourav1.marvel.Util.Constants.Companion.timeStamp
+import com.sourav1.marvel.ViewModel.LoadCharacterDetailsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CharacterDetails() :
     Fragment(R.layout.fragment_character_details) {
-    lateinit var viewModel: LoadCharacterDetailsViewModel
     lateinit var rv: RecyclerView
     lateinit var progressBar: ProgressBar
     lateinit var mAdapter: CharacterDetailsAdapter
+    lateinit var viewModel: LoadCharacterDetailsViewModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         val collectionURI = requireArguments().getString("URI")
         val mId = requireArguments().getInt("PARENT_ID")
         val characterName = requireArguments().getString("CHARACTER_NAME")
+        val mUrl = convertHttpToHttps(collectionURI!!)
 
-        (activity as AppCompatActivity).supportActionBar?.title = "${characterName.toString()} featured comics"
+        (activity as AppCompatActivity).supportActionBar?.title =
+            "${characterName.toString()} featured comics"
+
+        viewModel = ViewModelProvider(this)[LoadCharacterDetailsViewModel::class.java]
+        viewModel.refreshComics(mUrl, API_KEY, timeStamp, HASH, mId)
+
 
         rv = view.findViewById(R.id.comicsRv)
-        val mUrl = convertHttpToHttps(collectionURI!!)
         progressBar = view.findViewById(R.id.progressBarDetails)
 
-        viewModel = ViewModelProvider(
-            this,
-            LoadCharacterDetailsFactory(mUrl, requireContext(), mId)
-        )[LoadCharacterDetailsViewModel::class.java]
+
+
+
         setupRecyclerView()
 
         viewModel.result.observe(viewLifecycleOwner, Observer {

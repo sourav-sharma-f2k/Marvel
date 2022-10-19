@@ -1,29 +1,33 @@
 package com.sourav1.marvel.ViewModel
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.sourav1.marvel.Database.Entities.ComicsResult
 import com.sourav1.marvel.Repository.Repository
 import com.sourav1.marvel.Util.Constants.Companion.API_KEY
 import com.sourav1.marvel.Util.Constants.Companion.HASH
 import com.sourav1.marvel.Util.Constants.Companion.timeStamp
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class LoadCharacterDetailsViewModel(val url: String, context: Context, val id: Int) : ViewModel() {
-    val result: MutableLiveData<List<ComicsResult>> =
-        MutableLiveData()
-    private lateinit var repo: Repository
 
-    init {
-        repo = Repository(context)
-        refreshComics()
-    }
+@HiltViewModel
+class LoadCharacterDetailsViewModel @Inject constructor(
+    private val repo: Repository
+) : ViewModel() {
 
-    private fun refreshComics() = viewModelScope.launch {
+    val result: MutableLiveData<List<ComicsResult>> = MutableLiveData()
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun refreshComics(url: String, apiKey: String, timeStamp: String, hash: String, id: Int) = viewModelScope.launch {
         val request = GlobalScope.async {
-            repo.refreshComics(url, API_KEY, timeStamp, HASH, id)
+            repo.refreshComics(url, apiKey, timeStamp, hash, id)
         }
         request.join()
         getComicsResult(id)

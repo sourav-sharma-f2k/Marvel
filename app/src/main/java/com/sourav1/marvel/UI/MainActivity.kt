@@ -10,7 +10,9 @@ import android.view.WindowManager
 import androidx.core.os.HandlerCompat.postDelayed
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sourav1.marvel.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
