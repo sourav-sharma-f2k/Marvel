@@ -49,7 +49,7 @@
         android:layout_height="0dp"
         android:fontFamily="@font/crimson_text_regular"
         android:padding="10dp"
-        android:textColor="#9A6E9A"
+        android:textColor="#C9CDE4"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/comicNameTv"

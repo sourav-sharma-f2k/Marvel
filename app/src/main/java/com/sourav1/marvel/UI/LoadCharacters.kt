@@ -81,8 +81,17 @@ class LoadCharacters : Fragment(R.layout.fragment_load_characters) {
     }
 
     private fun setupRecyclerView() {
-        mAdapter = LoadCharactersAdapter(requireActivity()) {
-            viewModel.increaseClick(it)
+        mAdapter = LoadCharactersAdapter() { id, args ->
+            viewModel.increaseClick(id)
+
+            val fragment = CharacterDetails()
+            fragment.arguments = args
+
+            requireActivity().supportFragmentManager.beginTransaction().apply {
+                replace(R.id.fragmentContainer, fragment)
+                addToBackStack(null)
+                commit()
+            }
         }
         rv.apply {
             layoutManager = LinearLayoutManager(activity)

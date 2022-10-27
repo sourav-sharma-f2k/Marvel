@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
     android:background="@drawable/item_character_recommended_bg">
 
     <androidx.cardview.widget.CardView
@@ -42,7 +43,7 @@
         android:layout_height="0dp"
         android:fontFamily="@font/crimson_text_regular"
         android:padding="10dp"
-        android:textColor="#DBD5D5"
+        android:textColor="#C9CDE4"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/recommendedCharacterNameTv"
