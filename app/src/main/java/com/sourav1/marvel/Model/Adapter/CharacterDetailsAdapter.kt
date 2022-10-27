@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.sourav1.marvel.Database.Entities.ComicsResult
+import com.sourav1.marvel.Data.Database.Entities.ComicsResult
 import com.sourav1.marvel.R
-import com.sourav1.marvel.UI.ComicDetails
+import com.sourav1.marvel.Presentation.UI.ComicDetails
 import com.sourav1.marvel.Util.Constants
 
 class CharacterDetailsAdapter(private val fragmentManager: FragmentManager) :

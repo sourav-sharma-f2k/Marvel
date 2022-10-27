@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.sourav1.marvel.Database.Entities.CharacterResult
+import com.sourav1.marvel.Data.Database.Entities.CharacterResult
 import com.sourav1.marvel.R
 import com.sourav1.marvel.Util.Constants.Companion.convertHttpToHttps
 import kotlinx.coroutines.*

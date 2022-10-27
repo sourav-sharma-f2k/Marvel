@@ -1,9 +1,9 @@
 package com.sourav1.marvel.Util
 
-import com.sourav1.marvel.Database.Entities.CharacterResult
-import com.sourav1.marvel.Database.Entities.ComicsResult
-import com.sourav1.marvel.Model.Data.CharacterData.Characters
-import com.sourav1.marvel.Model.Data.ComicsData.Comics
+import com.sourav1.marvel.Data.Database.Entities.CharacterResult
+import com.sourav1.marvel.Data.Database.Entities.ComicsResult
+import com.sourav1.marvel.Model.DataClasses.CharacterData.Characters
+import com.sourav1.marvel.Model.DataClasses.ComicsData.Comics
 import retrofit2.Response
 import java.math.BigInteger
 import java.security.MessageDigest
